@@ -1,0 +1,32 @@
+<!--
+  ~ Copyright (c) 2016. Self Training Systems, Inc - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is strictly prohibited
+  ~ Proprietary and confidential
+  ~ Written by TienNguyen <tien.workinfo@gmail.com - tien.workinfo@icloud.com>, October 2015
+  -->
+
+<resources>
+    <string name="app_name">ToDoList</string>
+    <string name="to_do_list">To-Do List</string>
+    <string name="add_element">Add Element</string>
+    <string name="edit_element">Edit Element</string>
+    <string name="remove_element">Remove Element</string>
+    <string name="txt_title">Title:</string>
+    <string name="txt_details">Details:</string>
+    <string name="txt_priority">Priority:</string>
+    <string name="high_priority">High</string>
+    <string name="medium_priority">Medium</string>
+    <string name="low_priority">Low</string>
+    <string name="edt_title_hint">Subject hint</string>
+    <string name="edt_details_hint">Details hint</string>
+    <string name="remove_icon_hint">Remove Icon</string>
+    <string name="cancel_icon_hint">Cancel Icon</string>
+    <string name="add_icon_hint">Add Icon</string>
+    <string name="save_icon_hint">Save Icon</string>
+    <string name="close_icon">Close Icon</string>
+    <string name="no_items">No Items</string>
+    <string name="author_image">Author Image</string>
+    <string name="author_name">Tien Nguyen</string>
+    <string name="author_link_github">Github</string>
+    <string name="author_link_linkedin">Linkedin</string>
+</resources>

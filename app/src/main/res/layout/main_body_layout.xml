@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2016. Self Training Systems, Inc - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is strictly prohibited
+  ~ Proprietary and confidential
+  ~ Written by TienNguyen <tien.workinfo@gmail.com - tien.workinfo@icloud.com>, October 2015
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- No Items -->
+    <TextView
+        android:id="@+id/noItems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_centerInParent="true"
+        android:text="@string/no_items"
+        android:textSize="20sp"
+        android:textStyle="bold|italic" />
+
+    <!-- List -->
+    <ListView
+        android:id="@+id/toDoList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:divider="@color/colorHorizontal"
+        android:dividerHeight="2dip"
+        android:layoutAnimation="@anim/layout_listview_animator" />
+</RelativeLayout>

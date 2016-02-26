@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2016. Self Training Systems, Inc - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is strictly prohibited
+  ~ Proprietary and confidential
+  ~ Written by TienNguyen <tien.workinfo@gmail.com - tien.workinfo@icloud.com>, October 2015
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorBackgroundHeader">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <!-- Remove Icon -->
+        <ImageView
+            android:id="@+id/removeIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@string/remove_icon_hint"
+            android:src="@drawable/ic_remove_white_24dp" />
+
+        <!-- Cancel Icon -->
+        <ImageView
+            android:id="@+id/cancelIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@string/cancel_icon_hint"
+            android:src="@drawable/ic_cancel_white_24dp" />
+
+        <!-- App Logo -->
+        <TextView
+            android:id="@+id/appLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/to_do_list"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <!-- Add Icon -->
+        <ImageView
+            android:id="@+id/addIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:contentDescription="@string/add_icon_hint"
+            android:src="@drawable/ic_add_white_24dp" />
+
+        <!-- Save Icon -->
+        <ImageView
+            android:id="@+id/saveIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:contentDescription="@string/save_icon_hint"
+            android:src="@drawable/ic_save_white_24dp" />
+
+    </RelativeLayout>
+</LinearLayout>
