@@ -47,12 +47,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView authorBody1Object;
     private TextView authorBody2Object;
     private TextView authorBody3Object;
-    private ImageView removeIconObject;
-    private ImageView cancelIconObject;
-    private ImageView saveIconObject;
+    private ImageView removeEditIconObject;
     private ImageView closeIconObject;
-    private ImageView addIconObject;
+    private ImageView addSaveIconObject;
     private LinearLayout authorDetailsObject;
+    private int removeEditIconLevel;
+    private int addSaveIconLevel;
 
     /**
      * Starting point of main activity.
@@ -88,12 +88,16 @@ public class MainActivity extends AppCompatActivity {
         authorBody1Object = (TextView) findViewById(R.id.authorBody1);
         authorBody2Object = (TextView) findViewById(R.id.authorBody2);
         authorBody3Object = (TextView) findViewById(R.id.authorBody3);
-        removeIconObject = (ImageView) findViewById(R.id.removeIcon);
-        cancelIconObject = (ImageView) findViewById(R.id.cancelIcon);
-        saveIconObject = (ImageView) findViewById(R.id.saveIcon);
+        removeEditIconObject = (ImageView) findViewById(R.id.removeEditIcon);
         closeIconObject = (ImageView) findViewById(R.id.closeIcon);
-        addIconObject = (ImageView) findViewById(R.id.addIcon);
+        addSaveIconObject = (ImageView) findViewById(R.id.addSaveIcon);
         authorDetailsObject = (LinearLayout) findViewById(R.id.authorDetails);
+
+        // Set default icon level
+        removeEditIconLevel = 0;
+        removeEditIconObject.setImageLevel(removeEditIconLevel);
+        addSaveIconLevel = 0;
+        addSaveIconObject.setImageLevel(addSaveIconLevel);
 
         // Set logo text
         TextView appLogoObject = (TextView) findViewById(R.id.appLogo);
@@ -111,12 +115,15 @@ public class MainActivity extends AppCompatActivity {
         toDoElementListInit();
 
         // Set action when clicking Add
-        addIconObject.setOnClickListener(new View.OnClickListener() {
+        addSaveIconObject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ModifyActivity.class);
-                intent.setFlags(VariableConstants.ADD_ELEMENT);
-                startActivity(intent);
+                if (addSaveIconLevel == 0) {
+                    // Add zone
+                    Intent intent = new Intent(MainActivity.this, ModifyActivity.class);
+                    intent.setFlags(VariableConstants.ADD_ELEMENT);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -204,11 +211,10 @@ public class MainActivity extends AppCompatActivity {
             // If it's true, list contains some elements
             // Only toDoList & removeIcon are visible.
             toDoListObject.setVisibility(View.VISIBLE);
-            removeIconObject.setVisibility(View.VISIBLE);
+            removeEditIconObject.setVisibility(View.VISIBLE);
 
             noItemsObject.setVisibility(View.INVISIBLE);
-            cancelIconObject.setVisibility(View.INVISIBLE);
-            saveIconObject.setVisibility(View.INVISIBLE);
+            addSaveIconObject.setVisibility(View.VISIBLE);
 
             // Get list's records from database
             sqLiteConnection = new SQLiteConnection(MainActivity.this);
@@ -227,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
                     // Base on the CancelIcon is visible or not
-                    if (cancelIconObject.getVisibility() == View.VISIBLE) {
+                    if (removeEditIconLevel == 1) {
 
                         // Remove zone
                         new AlertDialog.Builder(MainActivity.this)
@@ -269,33 +275,31 @@ public class MainActivity extends AppCompatActivity {
             });
 
             // Set action when clicking Remove
-            removeIconObject.setOnClickListener(new View.OnClickListener() {
+            removeEditIconObject.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    removeIconObject.setVisibility(View.INVISIBLE);
-                    cancelIconObject.setVisibility(View.VISIBLE);
-                    Toast.makeText(MainActivity.this, VariableConstants.REMOVE_MODE, Toast.LENGTH_SHORT).show();
+                    if (removeEditIconLevel == 0) {
+                        // If it's Remove
+                        removeEditIconLevel = 1;
+                        removeEditIconObject.setImageLevel(removeEditIconLevel);
+                        Toast.makeText(MainActivity.this, VariableConstants.REMOVE_MODE, Toast.LENGTH_SHORT).show();
+                    } else {
+                        //  If it's Cancel
+                        removeEditIconLevel = 0;
+                        removeEditIconObject.setImageLevel(removeEditIconLevel);
+                        Toast.makeText(MainActivity.this, VariableConstants.EDIT_MODE, Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 
-            // Set action when clicking Cancel
-            cancelIconObject.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    removeIconObject.setVisibility(View.VISIBLE);
-                    cancelIconObject.setVisibility(View.INVISIBLE);
-                    Toast.makeText(MainActivity.this, VariableConstants.EDIT_MODE, Toast.LENGTH_SHORT).show();
-                }
-            });
         } else {
             // If it's false, it's empty list.
             // Only noItems is visible.
             noItemsObject.setVisibility(View.VISIBLE);
 
             toDoListObject.setVisibility(View.INVISIBLE);
-            removeIconObject.setVisibility(View.INVISIBLE);
-            cancelIconObject.setVisibility(View.INVISIBLE);
-            saveIconObject.setVisibility(View.INVISIBLE);
+            removeEditIconObject.setVisibility(View.INVISIBLE);
+            addSaveIconObject.setVisibility(View.VISIBLE);
 
             // Init list
             toDoElementList = new ArrayList<>();

@@ -8,32 +8,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/colorBackgroundHeader">
+    android:background="@color/colorBackgroundHeader"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp">
 
-        <!-- Remove Icon -->
+        <!--Remove - Edit Icon -->
         <ImageView
-            android:id="@+id/removeIcon"
+            android:id="@+id/removeEditIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:contentDescription="@string/remove_icon_hint"
-            android:src="@drawable/ic_remove_white_24dp" />
-
-        <!-- Cancel Icon -->
-        <ImageView
-            android:id="@+id/cancelIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:contentDescription="@string/cancel_icon_hint"
-            android:src="@drawable/ic_cancel_white_24dp" />
+            android:src="@drawable/remove_edit_icon" />
 
         <!-- App Logo -->
         <TextView
@@ -45,27 +35,16 @@
             android:textSize="25sp"
             android:textStyle="bold" />
 
-        <!-- Add Icon -->
+        <!-- Add - Save Icon -->
         <ImageView
-            android:id="@+id/addIcon"
+            android:id="@+id/addSaveIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:contentDescription="@string/add_icon_hint"
-            android:src="@drawable/ic_add_white_24dp" />
-
-        <!-- Save Icon -->
-        <ImageView
-            android:id="@+id/saveIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:contentDescription="@string/save_icon_hint"
-            android:src="@drawable/ic_save_white_24dp" />
+            android:src="@drawable/add_save_icon" />
 
     </RelativeLayout>
 </LinearLayout>

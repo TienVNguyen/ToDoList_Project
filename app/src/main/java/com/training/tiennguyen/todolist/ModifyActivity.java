@@ -34,15 +34,15 @@ import com.training.tiennguyen.model.ToDoElement;
 public class ModifyActivity extends AppCompatActivity {
     private int actionFlags;
     private TextView appLogoObject;
-    private ImageView removeIconObject;
-    private ImageView cancelIconObject;
-    private ImageView saveIconObject;
-    private ImageView addIconObject;
+    private ImageView removeEditIconObject;
+    private ImageView addSaveIconObject;
     private EditText edtTitleObject;
     private EditText edtDetailsObject;
     private RadioButton rdbHighObject;
     private RadioButton rdbMediumObject;
     private RadioButton rdbLowObject;
+    private int removeEditIconLevel;
+    private int addSaveIconLevel;
 
     /**
      * Starting point of main activity.
@@ -67,7 +67,7 @@ public class ModifyActivity extends AppCompatActivity {
     private void initFunction() {
 
         // Set action when clicking Cancel
-        cancelIconObject.setOnClickListener(new View.OnClickListener() {
+        removeEditIconObject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -75,7 +75,7 @@ public class ModifyActivity extends AppCompatActivity {
         });
 
         // Set action when clicking Save
-        saveIconObject.setOnClickListener(new View.OnClickListener() {
+        addSaveIconObject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Check input
@@ -221,10 +221,8 @@ public class ModifyActivity extends AppCompatActivity {
 
         // Init Internal Object for action
         appLogoObject = (TextView) findViewById(R.id.appLogo);
-        removeIconObject = (ImageView) findViewById(R.id.removeIcon);
-        cancelIconObject = (ImageView) findViewById(R.id.cancelIcon);
-        saveIconObject = (ImageView) findViewById(R.id.saveIcon);
-        addIconObject = (ImageView) findViewById(R.id.addIcon);
+        removeEditIconObject = (ImageView) findViewById(R.id.removeEditIcon);
+        addSaveIconObject = (ImageView) findViewById(R.id.addSaveIcon);
         edtTitleObject = (EditText) findViewById(R.id.edtTitle);
         edtDetailsObject = (EditText) findViewById(R.id.edtDetails);
         rdbHighObject = (RadioButton) findViewById(R.id.rdbHigh);
@@ -272,9 +270,11 @@ public class ModifyActivity extends AppCompatActivity {
         }
 
         // Set icons' appearance
-        removeIconObject.setVisibility(View.INVISIBLE);
-        cancelIconObject.setVisibility(View.VISIBLE);
-        saveIconObject.setVisibility(View.VISIBLE);
-        addIconObject.setVisibility(View.INVISIBLE);
+        removeEditIconLevel = 1;
+        removeEditIconObject.setVisibility(View.VISIBLE);
+        removeEditIconObject.setImageLevel(removeEditIconLevel);
+        addSaveIconLevel = 1;
+        addSaveIconObject.setVisibility(View.VISIBLE);
+        addSaveIconObject.setImageLevel(addSaveIconLevel);
     }
 }

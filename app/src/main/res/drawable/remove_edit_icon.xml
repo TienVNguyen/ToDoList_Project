@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2016. Self Training Systems, Inc - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is strictly prohibited
+  ~ Proprietary and confidential
+  ~ Written by TienNguyen <tien.workinfo@gmail.com - tien.workinfo@icloud.com>, October 2015
+  -->
+
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Edit Mode -->
+    <item
+        android:drawable="@drawable/ic_remove_white_24dp"
+        android:maxLevel="0" />
+
+    <!-- Remove Mode -->
+    <item
+        android:drawable="@drawable/ic_cancel_white_24dp"
+        android:maxLevel="1" />
+</level-list>
