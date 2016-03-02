@@ -31,7 +31,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/txt_title" />
+                android:text="@string/txt_title"
+                android:textColor="@color/colorDialogText"
+                android:textSize="@dimen/custom_dialog_body" />
 
             <!-- Details -->
             <TextView
@@ -40,7 +42,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/txt_details" />
+                android:text="@string/txt_details"
+                android:textColor="@color/colorDialogText"
+                android:textSize="@dimen/custom_dialog_body" />
 
             <!-- Priority -->
             <TextView
@@ -49,7 +53,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/txt_priority" />
+                android:text="@string/txt_priority"
+                android:textColor="@color/colorDialogText"
+                android:textSize="@dimen/custom_dialog_body" />
         </LinearLayout>
 
         <LinearLayout
@@ -68,7 +74,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/edt_title_hint"
-                android:maxLength="15" />
+                android:maxLength="15"
+                android:textSize="@dimen/custom_dialog_body" />
 
             <!-- Details -->
             <EditText
@@ -79,7 +86,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/edt_details_hint"
-                android:maxLength="200" />
+                android:maxLength="200"
+                android:textSize="@dimen/custom_dialog_body" />
 
             <!-- Priority -->
             <RadioGroup
@@ -98,7 +106,8 @@
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="@string/high_priority"
-                    android:textColor="@color/colorPriorityHigh" />
+                    android:textColor="@color/colorPriorityHigh"
+                    android:textSize="@dimen/custom_dialog_body" />
 
                 <!-- Medium Priority -->
                 <RadioButton
@@ -106,7 +115,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/medium_priority"
-                    android:textColor="@color/colorPriorityMedium" />
+                    android:textColor="@color/colorPriorityMedium"
+                    android:textSize="@dimen/custom_dialog_body" />
 
                 <!-- Low Priority -->
                 <RadioButton
@@ -114,8 +124,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/low_priority"
-                    android:textColor="@color/colorPriorityLow" />
+                    android:textColor="@color/colorPriorityLow"
+                    android:textSize="@dimen/custom_dialog_body" />
             </RadioGroup>
         </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>

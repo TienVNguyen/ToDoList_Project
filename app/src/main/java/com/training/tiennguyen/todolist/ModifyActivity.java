@@ -30,7 +30,9 @@ import com.training.tiennguyen.model.ToDoElement;
  * Such as: Add and Edit functions.
  *
  * @author TienNguyen
+ * @deprecated This will be replaced by ModifyDialogActivity
  */
+@Deprecated
 public class ModifyActivity extends AppCompatActivity {
     private int actionFlags;
     private TextView appLogoObject;
@@ -222,7 +224,7 @@ public class ModifyActivity extends AppCompatActivity {
         // Init Internal Object for action
         appLogoObject = (TextView) findViewById(R.id.appLogo);
         removeEditIconObject = (ImageView) findViewById(R.id.removeEditIcon);
-        addSaveIconObject = (ImageView) findViewById(R.id.addSaveIcon);
+        addSaveIconObject = (ImageView) findViewById(R.id.addIcon);
         edtTitleObject = (EditText) findViewById(R.id.edtTitle);
         edtDetailsObject = (EditText) findViewById(R.id.edtDetails);
         rdbHighObject = (RadioButton) findViewById(R.id.rdbHigh);

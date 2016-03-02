@@ -18,6 +18,7 @@ public class VariableConstants {
     public static final String TITLE = "TITLE";
     public static final String DETAILS = "DETAILS";
     public static final String PRIORITY = "PRIORITY";
+    public static final String ACTION_TYPE = "ACTION_TYPE";
 
     public static final int ADD_ELEMENT = 1;
     public static final int EDIT_ELEMENT = 2;

@@ -37,7 +37,7 @@
 
         <!-- Add - Save Icon -->
         <ImageView
-            android:id="@+id/addSaveIcon"
+            android:id="@+id/addIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

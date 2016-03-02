@@ -18,4 +18,5 @@
     <color name="colorAuthorDetails">#0099CC</color>
     <color name="colorAuthorDetailsName">#FFFFFF</color>
     <color name="colorAuthorDetailsLink">#FFFF66</color>
+    <color name="colorDialogText">#80000000</color>
 </resources>

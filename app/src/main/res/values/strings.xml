@@ -29,4 +29,5 @@
     <string name="author_name">Tien Nguyen</string>
     <string name="author_link_github">Github</string>
     <string name="author_link_linkedin">Linkedin</string>
+    <string name="submit_link">Submit</string>
 </resources>

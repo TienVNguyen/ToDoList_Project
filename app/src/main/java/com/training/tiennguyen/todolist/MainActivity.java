@@ -12,19 +12,26 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.training.tiennguyen.adapter.ToDoListAdapter;
 import com.training.tiennguyen.constants.VariableConstants;
 import com.training.tiennguyen.database.SQLiteConnection;
@@ -53,6 +60,13 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout authorDetailsObject;
     private int removeEditIconLevel;
     private int addSaveIconLevel;
+    private EditText edtTitle;
+    private EditText edtTitleObject;
+    private EditText edtDetailsObject;
+    private RadioButton rdbHighObject;
+    private RadioButton rdbMediumObject;
+    private RadioButton rdbLowObject;
+    private View positiveAction;
 
     /**
      * Starting point of main activity.
@@ -90,8 +104,9 @@ public class MainActivity extends AppCompatActivity {
         authorBody3Object = (TextView) findViewById(R.id.authorBody3);
         removeEditIconObject = (ImageView) findViewById(R.id.removeEditIcon);
         closeIconObject = (ImageView) findViewById(R.id.closeIcon);
-        addSaveIconObject = (ImageView) findViewById(R.id.addSaveIcon);
+        addSaveIconObject = (ImageView) findViewById(R.id.addIcon);
         authorDetailsObject = (LinearLayout) findViewById(R.id.authorDetails);
+        removeEditIconObject = (ImageView) findViewById(R.id.removeEditIcon);
 
         // Set default icon level
         removeEditIconLevel = 0;
@@ -119,14 +134,116 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (addSaveIconLevel == 0) {
-                    // Add zone
-                    Intent intent = new Intent(MainActivity.this, ModifyActivity.class);
+                    // Add zone (Old type)
+                    /*Intent intent = new Intent(MainActivity.this, ModifyDialogActivity.class);
                     intent.setFlags(VariableConstants.ADD_ELEMENT);
-                    startActivity(intent);
+                    startActivity(intent);*/
+
+                    // Add zone (New type)
+                    MaterialDialog dialog = new MaterialDialog.Builder(MainActivity.this)
+                            .title(R.string.add_element)
+                            .customView(R.layout.modify_body_layout, true)
+                            .positiveText(R.string.submit_link)
+                            .negativeText(android.R.string.cancel)
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    // Set object toDoElement for modifying database
+                                    ToDoElement toDoElementTemp = new ToDoElement();
+                                    toDoElementTemp.setTitle(edtTitleObject.getText().toString());
+                                    toDoElementTemp.setDetails(edtDetailsObject.getText().toString());
+                                    if (rdbHighObject.isChecked()) {
+                                        toDoElementTemp.setPriority(0);
+                                    } else if (rdbMediumObject.isChecked()) {
+                                        toDoElementTemp.setPriority(1);
+                                    } else {
+                                        toDoElementTemp.setPriority(2);
+                                    }
+
+                                    SQLiteConnection sqLiteConnection = new SQLiteConnection(MainActivity.this);
+                                    // Check existed before inserting more
+                                    if (sqLiteConnection.checkElementExists(toDoElementTemp)) {
+                                        // If it's already existed, show error message
+                                        failedAction(VariableConstants.EXISTED_MESSAGE_TITLE, VariableConstants.EXISTED_MESSAGE);
+                                    } else {
+                                        // Insert action
+                                        long insertFlag = sqLiteConnection.insertElement(toDoElementTemp);
+                                        sqLiteConnection.close();
+
+                                        if (insertFlag != -1) {
+                                            // If it inserts successfully, show message
+                                            Toast.makeText(MainActivity.this, VariableConstants.REGISTER_MESSAGE_SUCCESS + toDoElementTemp.getTitle(), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            // If there is error, show error message
+                                            failedAction(VariableConstants.REGISTER_MESSAGE_FAILED_TITLE, VariableConstants.REGISTER_MESSAGE_FAILED);
+                                        }
+                                    }
+                                    onResume();
+                                }
+                            }).build();
+
+                    positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+
+                    // Constant Conditions
+                    edtTitleObject = (EditText) dialog.getCustomView().findViewById(R.id.edtTitle);
+                    edtTitleObject.setEnabled(true);
+                    edtTitleObject.setText("");
+                    edtTitleObject.requestFocus();
+                    edtTitleObject.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            if (edtTitleObject.getText().length() != 0 && edtDetailsObject.getText().length() != 0)
+                                positiveAction.setEnabled(true);
+                            else
+                                positiveAction.setEnabled(false);
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                        }
+                    });
+
+                    // Constant Conditions
+                    edtDetailsObject = (EditText) dialog.getCustomView().findViewById(R.id.edtDetails);
+                    edtDetailsObject.setText("");
+                    edtDetailsObject.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            if (edtTitleObject.getText().length() != 0 && edtDetailsObject.getText().length() != 0)
+                                positiveAction.setEnabled(true);
+                            else
+                                positiveAction.setEnabled(false);
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                        }
+                    });
+
+                    // Constant Conditions
+                    rdbHighObject = (RadioButton) dialog.getCustomView().findViewById(R.id.rdbHigh);
+                    rdbMediumObject = (RadioButton) dialog.getCustomView().findViewById(R.id.rdbMedium);
+                    rdbLowObject = (RadioButton) dialog.getCustomView().findViewById(R.id.rdbLow);
+                    rdbHighObject.setChecked(true);
+                    rdbMediumObject.setChecked(false);
+                    rdbLowObject.setChecked(false);
+
+                    dialog.show();
+                    positiveAction.setEnabled(false); // disabled by default
                 }
             }
         });
     }
+
+    private Toast mToast;
 
     /**
      * Set animation for author details
@@ -263,13 +380,106 @@ public class MainActivity extends AppCompatActivity {
                                 })
                                 .show();
                     } else {
-                        // Edit zone
-                        Intent intent = new Intent(MainActivity.this, ModifyActivity.class);
+                        // Edit zone (Old type)
+                        /*Intent intent = new Intent(MainActivity.this, ModifyActivity.class);
                         intent.putExtra(VariableConstants.TITLE, toDoElementList.get(position).getTitle());
                         intent.putExtra(VariableConstants.DETAILS, toDoElementList.get(position).getDetails());
                         intent.putExtra(VariableConstants.PRIORITY, toDoElementList.get(position).getPriority());
                         intent.setFlags(VariableConstants.EDIT_ELEMENT);
-                        startActivity(intent);
+                        startActivity(intent);*/
+
+                        // Edit zone (New type)
+                        MaterialDialog dialog = new MaterialDialog.Builder(MainActivity.this)
+                                .title(R.string.edit_element)
+                                .customView(R.layout.modify_body_layout, true)
+                                .positiveText(R.string.submit_link)
+                                .negativeText(android.R.string.cancel)
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        // Set object toDoElement for modifying database
+                                        ToDoElement toDoElementTemp = new ToDoElement();
+                                        toDoElementTemp.setTitle(edtTitleObject.getText().toString());
+                                        toDoElementTemp.setDetails(edtDetailsObject.getText().toString());
+                                        if (rdbHighObject.isChecked()) {
+                                            toDoElementTemp.setPriority(0);
+                                        } else if (rdbMediumObject.isChecked()) {
+                                            toDoElementTemp.setPriority(1);
+                                        } else {
+                                            toDoElementTemp.setPriority(2);
+                                        }
+
+                                        SQLiteConnection sqLiteConnection = new SQLiteConnection(MainActivity.this);
+                                        int updateFlag = sqLiteConnection.updateElement(toDoElementTemp);
+                                        sqLiteConnection.close();
+
+                                        if (updateFlag != -1) {
+                                            // If it updates successfully, show message
+                                            Toast.makeText(MainActivity.this, VariableConstants.UPDATE_MESSAGE_SUCCESS + toDoElementTemp.getTitle(), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            // If there is error, show error message
+                                            failedAction(VariableConstants.UPDATE_MESSAGE_FAILED_TITLE, VariableConstants.UPDATE_MESSAGE_FAILED);
+                                        }
+                                        onResume();
+                                    }
+                                }).build();
+
+                        positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+
+                        // Constant Conditions
+                        edtTitleObject = (EditText) dialog.getCustomView().findViewById(R.id.edtTitle);
+                        edtTitleObject.setEnabled(false);
+                        edtTitleObject.setText(toDoElementList.get(position).getTitle());
+
+                        // Constant Conditions
+                        edtDetailsObject = (EditText) dialog.getCustomView().findViewById(R.id.edtDetails);
+                        edtDetailsObject.setText(toDoElementList.get(position).getDetails());
+                        edtDetailsObject.requestFocus();
+                        edtDetailsObject.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                            }
+
+                            @Override
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                if (edtTitleObject.getText().length() != 0 && edtDetailsObject.getText().length() != 0)
+                                    positiveAction.setEnabled(true);
+                                else
+                                    positiveAction.setEnabled(false);
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable s) {
+                            }
+                        });
+
+                        // Constant Conditions
+                        rdbHighObject = (RadioButton) dialog.getCustomView().findViewById(R.id.rdbHigh);
+                        rdbMediumObject = (RadioButton) dialog.getCustomView().findViewById(R.id.rdbMedium);
+                        rdbLowObject = (RadioButton) dialog.getCustomView().findViewById(R.id.rdbLow);
+                        switch (toDoElementList.get(position).getPriority()) {
+                            case 1:
+                                // Medium
+                                rdbHighObject.setChecked(false);
+                                rdbMediumObject.setChecked(true);
+                                rdbLowObject.setChecked(false);
+                                break;
+                            case 2:
+                                // Low
+                                rdbHighObject.setChecked(false);
+                                rdbMediumObject.setChecked(false);
+                                rdbLowObject.setChecked(true);
+                                break;
+                            default:
+                                // High
+                                rdbHighObject.setChecked(true);
+                                rdbMediumObject.setChecked(false);
+                                rdbLowObject.setChecked(false);
+                                break;
+                        }
+
+                        dialog.show();
+                        positiveAction.setEnabled(true); // disabled by default
                     }
                 }
             });
@@ -304,6 +514,43 @@ public class MainActivity extends AppCompatActivity {
             // Init list
             toDoElementList = new ArrayList<>();
         }
+    }
+
+    /**
+     * There is error issue with action
+     *
+     * @param messageTitle   title of message
+     * @param messageContain contain of message
+     */
+    private void failedAction(String messageTitle, String messageContain) {
+        // Create onClickListener
+        DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
+            /**
+             * This method will be invoked when a button in the dialog is clicked.
+             *
+             * @param dialog The dialog that received the click.
+             * @param which  The button that was clicked (e.g.
+             *               {@link DialogInterface#BUTTON1}) or the position
+             */
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        break;
+                }
+            }
+        };
+
+        // Build dialog and show it
+        android.support.v7.app.AlertDialog.Builder builderDialog = new android.support.v7.app.AlertDialog.Builder(MainActivity.this);
+        builderDialog.setIcon(android.R.drawable.ic_dialog_alert);
+        builderDialog.setTitle(messageTitle);
+        builderDialog.setPositiveButton(VariableConstants.REGISTER_MESSAGE_AGAIN, onClickListener);
+        builderDialog.setMessage(messageContain);
+        builderDialog.show();
+
+        // Set focus to Title
+        edtTitleObject.requestFocus();
     }
 
     /**
@@ -350,5 +597,4 @@ public class MainActivity extends AppCompatActivity {
                 Uri.parse(VariableConstants.LINKEDIN_URL));
         startActivity(browserIntent);
     }
-
 }
